@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import {navigate, useNavigate} from "react-router-dom";
+import { RegisterAPI } from '../services/RegisterCall';
 
 function Copyright(props) {
   return (
@@ -29,7 +30,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Register() {
+
   let navigate = useNavigate();
+  const[userExist,setUserExist]=useState("")
 
   const [userDetail,setUserDetail] = useState({
     first_name :"",
@@ -38,6 +41,23 @@ export default function Register() {
     phone: "",
     password : "" 
   })  
+
+  const RegisterUser=()=>{
+    const{first_name,last_name,email,phone,password}=userDetail;
+    if(first_name==""||last_name==""||email==""||phone==""||password=="")
+  alert("Please fill the required fields");
+
+else{
+
+  RegisterAPI({first_name,last_name, email,password,phone},(res)=>{
+    if(res?.data?.status===true){
+      setUserExist("User already exist.")
+    }
+    console.log("printing response of get register api",res)}
+    ,(err)=>{
+      alert("got error of register api",err)
+  })
+}}
 
 
   const handleSubmit = (event) => {
@@ -147,7 +167,8 @@ export default function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={() => {
-          navigate('/');}}
+                RegisterUser();
+               }}
             >
               Register
             </Button>
