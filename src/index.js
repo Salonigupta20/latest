@@ -6,12 +6,15 @@ import reportWebVitals from './reportWebVitals';
 import Routing from './router/Routes';
 import { BrowserRouter } from 'react-router-dom';
 import VerifyEmail from './components/VerifyEmail';
+import { Provider as AuthProvider } from './context/auth-context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
   <BrowserRouter>
+  <AuthProvider>
  <Routing></Routing>
+ </AuthProvider>
  </BrowserRouter>
   </React.StrictMode>
 );

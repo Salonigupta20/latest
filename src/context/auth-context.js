@@ -1,65 +1,100 @@
-import actionTypes from "../constants/actionTypes";
 import createDataContext from "./create_data_context";
-import database from "../constants/db";
+import { SignInAPI } from "../services/SignInCall";
+import { useReducer } from "react";
 
-const initialState = {
-  isLoggedIn: false,
-  isError: false,
-  username: null,
-  password: null,
-  database
-}
+
+
+
 
 const reducer = (state, action) => {
-
-
   switch (action.type) {
-    case actionTypes.LOGIN: {
-      return { ...state, isLoggedIn: action.payload.isLoggedIn, isError: action.payload.isError, username: action.payload.username }
-    }
-    case actionTypes.LOGOUT: {
-      return {
-        ...state,
-        isLoggedIn: false,
-        isError: false,
-        username: null,
-        password: null
-      }
-    }
-    case actionTypes.REGISTER: {
-      return { ...state, database: [ ...state.database, { 
-        username: action.payload.uname,
-        password: action.payload.pass
-       } ] }
-    }
+    case "setUserDetail":
+      return { ...state, user_detail: action.payload };
+    case "setErrorMessage":
+      return { ...state, error_message: action.payload.error_message };
+    default:
+      return state;
   }
 };
 
+const SignInCall= (dispatch)=> async({email, password}) => {
+  dispatch ({
+    type:"setErrorMessage",
+    payload: {
+      error_message:""
+    }
+  })
+  SignInAPI({
+     email,
+     password
+  }, (res)=>{
+    //  console.log("Login call successfull response",res.data);
+     if(res.data.status == true){
+        dispatch({
+          type:"setUserDetail",
+          payload: {
+            access_token: res.data.data.accessToken,
+            user_email:res.data.data.user_email,
 
-const login = (dispatch) => ({ uname, pass }) => {
-  dispatch({ type:actionTypes.LOGIN, payload: { uname, pass } })
+          }
+        })
+     }
+     else{
+      dispatch ({
+        type:"setErrorMessage",
+        payload: {
+          error_message:"Incorrect Email address or password"
+        }
+      })
+      dispatch({
+        type:"setUserDetail",
+        payload: {
+          access_token: "",
+          user_email:"",
+        }
+      })
+    }
+  });
+}
 
-  const userData = database.find((user) => user.username === uname);
-  console.log("user data", userData);
 
-   if(!userData || userData.password !== pass){
-    dispatch({ type:actionTypes.LOGIN, payload: { isError: true, isLoggedIn: false, username: null } })
+// const reducer = (state, action) => {
+//   switch(action.type){
+//     case "updateName": {
+//       return { ...state, firstName: action.payload }
+//     }
+//   }
+// }
+
+
+
+
+
+// const [state, dispatch] = useReducer(reducer, {
+//   lastName: "",
+//   email: "",
+//   password: ""
+// })
+
+// dispatch({
+//   firstName: null
+// })
+
+
+
+// const UpdateFirstName = dispatch => (value)=>{
+//   dispatch({
+//     type: "updateFirstName",
+//     payload: value
+//   })
+// }
+
+
+export const { Provider, Context } = createDataContext(
+  reducer, {SignInCall},
+  {
+  userDetail: {
+    access_token: "",
+    user_email:"",
   }
-  else{
-    dispatch({ type:actionTypes.LOGIN, payload: { isLoggedIn: true, isError: false, username: uname } })
-  }
-
-  
-}
-const logout = (dispatch) => () => {
-  dispatch({ type: actionTypes.LOGOUT })
-}
-
-const register = (dispatch) => ({ uname, pass }) => {
-  dispatch({ type:actionTypes.REGISTER, payload: { uname, pass } })
-}
-
-
-const actionsObj = { login, logout,register };
-
-export const { Provider, Context } = createDataContext(reducer, actionsObj, initialState);
+});

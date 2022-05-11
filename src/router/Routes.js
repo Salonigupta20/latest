@@ -5,6 +5,7 @@ import VerifyEmail from "../components/VerifyEmail";
 import ResetPassword from "../components/ResetPwFinal";
 import Reset from "../components/ResetPwInitial";
 import { Route, Routes, Navigate } from "react-router-dom";
+import Dashboard from "../components/Dashboard";
 
 function Routing(){
     return(
@@ -14,6 +15,7 @@ function Routing(){
             <Route path="VerifyEmail" element={<VerifyEmail />}/>
             <Route path="Reset" element={<Reset />}/>
             <Route path="ResetPassword" element={<ResetPassword />}/>
+            <Route path="Dashboard" element={<Dashboard />}/>
         </Routes>
     )
 }

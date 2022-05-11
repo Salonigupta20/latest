@@ -10,9 +10,10 @@ import Grid from '@mui/material/Grid';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useState , useContext} from 'react';
 import img1 from "../images/acedata.jpg";
 import {navigate, useNavigate} from "react-router-dom";
+import {Context as Authcontext} from "../context/auth-context" 
 
 function Copyright(props) {
 
@@ -32,9 +33,15 @@ const theme = createTheme();
 
 export default function SignIn() {
   let navigate = useNavigate();
+  const{SignInCall, state}= useContext(Authcontext)
+  const{error_message}= state;
 
-  const [myEmail,setEmail] = useState('')
-    const [myPass,setPass] = useState('')
+  const [userDetail,setUserDetail] = useState(
+    {
+      email: "",
+    password: ""
+    }
+  )
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -76,6 +83,7 @@ export default function SignIn() {
               <VpnKeyIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
+            <span>{error_message}</span>
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -88,8 +96,8 @@ export default function SignIn() {
                 name="email"
                 autoComplete="email"
                 autoFocus
-                value={myEmail}
-                onChange={(e) => setEmail(e.target.value)}
+                value={userDetail.email}
+                onChange={(e) => setUserDetail({...userDetail,email: e.target.value})}
               />
               <TextField
                 margin="normal"
@@ -100,14 +108,23 @@ export default function SignIn() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                value={myPass}
-                onChange={(e) => setPass(e.target.value)}
+                value={userDetail.password}
+                onChange={(e) => setUserDetail({...userDetail,password: e.target.value})}
               />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={()=>{
+                  SignInCall({
+                    "email": userDetail.email,
+                    "password": userDetail.password
+    
+                  })
+                  navigate('dashboard')
+                }
+                }
               >
                 Sign In
               </Button>
