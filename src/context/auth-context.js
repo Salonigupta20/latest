@@ -14,6 +14,8 @@ const reducer = (state, action) => {
       return { ...state, user_detail: action.payload };
     case "setErrorMessage":
       return { ...state, error_message: action.payload.error_message };
+      case "logout":
+        return { ...state, user_detail: action.payload}
     default:
       return state;
   }
@@ -73,6 +75,23 @@ const SignInCall= (dispatch)=> async({email, password}) => {
     }
   });
 }
+
+const logout= (dispatch)=> () =>{
+  dispatch({
+    type: "logout",
+    payload:{
+      access_token: "",
+    user_email:"",
+    user_first_name:"",
+    user_last_name:"",
+    user_password :"",
+    user_phone : "",
+    flag_authenticated: "",
+    flag_email_verified: ""
+    }
+  })
+}
+    
 
 const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,password }) => {
   dispatch ({
@@ -159,9 +178,9 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,pass
 
 
 export const { Provider, Context } = createDataContext(
-  reducer, {SignInCall, Registercall },
+  reducer, {SignInCall, Registercall, logout },
   {
-  userDetail: {
+  user_detail: {
     access_token: "",
     user_email:"",
     user_first_name:"",

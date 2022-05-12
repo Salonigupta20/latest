@@ -6,16 +6,32 @@ import ResetPassword from "../components/ResetPwFinal";
 import Reset from "../components/ResetPwInitial";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Dashboard from "../components/Dashboard";
+import {Context as Authcontext} from "../context/auth-context" 
+import {useContext} from "react"
 
 function Routing(){
+    const {state} = useContext(Authcontext);
+  const { user_detail: {access_token} } = state;
+  console.log("isLoggedIn from App.js called",access_token);
     return(
         <Routes>
-            <Route path="/" element={<SignIn />}/>
+           {access_token ? (<>
+            <Route path="/" element={<Navigate to ="/Dashboard" />}/>
             <Route path="register" element={<Register />}/>
             <Route path="VerifyEmail" element={<VerifyEmail />}/>
             <Route path="Reset" element={<Reset />}/>
             <Route path="ResetPassword" element={<ResetPassword />}/>
             <Route path="Dashboard" element={<Dashboard />}/>
+            </>) :
+            (<>
+            <Route path="/" element={<SignIn />}/>
+            <Route path="register" element={<Register />}/>
+            <Route path="VerifyEmail" element={<Navigate to ="/" />}/>
+            <Route path="Reset" element={<Navigate to ="/" />}/>
+            <Route path="ResetPassword" element={<Navigate to ="/" />}/>
+            <Route path="Dashboard" element={<Navigate to ="/" />}/>
+            </>)
+         }
         </Routes>
     )
 }

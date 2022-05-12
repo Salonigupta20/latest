@@ -10,7 +10,7 @@ import Grid from '@mui/material/Grid';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState , useContext} from 'react';
+import { useState , useContext, useEffect} from 'react';
 import img1 from "../images/acedata.jpg";
 import {navigate, useNavigate} from "react-router-dom";
 import {Context as Authcontext} from "../context/auth-context" 
@@ -66,6 +66,11 @@ export default function SignIn() {
 //   })
 // }}
 
+// useEffect(() => {
+//         if (state.user_detail.access_token) {
+//             navigate("/Dashboard")
+//         }
+//     }, [state.user_detail.access_token])
 
 
   const handleSubmit = (event) => {
