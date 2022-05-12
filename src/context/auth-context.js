@@ -34,7 +34,8 @@ const SignInCall= (dispatch)=> async({email, password}) => {
   }, (res)=>{
 
     console.log("data",res.data)
-     if(res.data.status == true){
+    console.log("data.data",res.data.data)
+     if(res.data.status == true && res.data.data.verify===true ){
         dispatch({
           type:"setUserDetail",
           payload: {
@@ -43,13 +44,13 @@ const SignInCall= (dispatch)=> async({email, password}) => {
             user_password: "",
             user_phone: "",
             flag_authenticated: "",
-            flag_email_verified: "",
+            flag_email_verified: true,
             access_token: res.data.data.accessToken,
             user_email: res.data.data.user_email,
 
           }
           
-        })
+        }) 
        
      }
      else{
