@@ -10,7 +10,7 @@ export const RegisterAPI= async(data,onSuccess, onError)=>{
             },
             withCredentials:true
         });
-        console.log("printint response in register api",response)
+        console.log("log response in register api",response)
         onSuccess && onSuccess(response);
     }
     catch(err){

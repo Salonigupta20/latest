@@ -14,6 +14,7 @@ import { useState , useContext} from 'react';
 import img1 from "../images/acedata.jpg";
 import {navigate, useNavigate} from "react-router-dom";
 import {Context as Authcontext} from "../context/auth-context" 
+import { SignInAPI } from '../services/SignInCall';
 
 function Copyright(props) {
 
@@ -42,6 +43,31 @@ export default function SignIn() {
     password: ""
     }
   )
+//   const LoginUser=()=>{
+//     const{email,password}=userDetail;
+//     if(email==""||password==""){
+//           alert("Please fill the required fields");
+//     }
+//    else{
+//   SignInAPI({email,password},(res)=>{
+//     if(res.data.verify===false){
+//       navigate('/VerifyEmail')
+//       // setUserExist("User Registered Successfully");
+//       // // setTimeout(navigate("/VerifyEmail",{state: {email}}), 60000)
+//       // setTimeout(()=>navigate("/VerifyEmail"),2000)
+//     }
+//     else{
+//       navigate('/Dashboard')
+//       // setUserExist("User Already Exist. Please sign in")
+//       // // setTimeout(navigate("/",{state: {email}}),60000)
+//       // setTimeout(()=>navigate("/"),2000)
+//     }
+    
+//   })
+// }}
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -83,9 +109,9 @@ export default function SignIn() {
               <VpnKeyIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-            <span>{error_message}</span>
               Sign in
             </Typography>
+            <span>{error_message}</span>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
@@ -116,13 +142,15 @@ export default function SignIn() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                // onClick={LoginUser}
                 onClick={()=>{
                   SignInCall({
                     "email": userDetail.email,
                     "password": userDetail.password
     
                   })
-                  navigate('dashboard')
+                  // if(res.data.flag)
+                  // navigate('dashboard')
                 }
                 }
               >

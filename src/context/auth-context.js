@@ -2,6 +2,7 @@ import createDataContext from "./create_data_context";
 import { SignInAPI } from "../services/SignInCall";
 import { RegisterAPI } from "../services/RegisterCall";
 import { useReducer } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 
@@ -29,16 +30,25 @@ const SignInCall= (dispatch)=> async({email, password}) => {
      email,
      password
   }, (res)=>{
-    //  console.log("Login call successfull response",res.data);
+
+    console.log("data",res.data)
      if(res.data.status == true){
         dispatch({
           type:"setUserDetail",
           payload: {
+            user_firstname: "",
+            user_lastname: "",
+            user_password: "",
+            user_phone: "",
+            flag_authenticated: "",
+            flag_email_verified: "",
             access_token: res.data.data.accessToken,
-            user_email:res.data.data.user_email,
+            user_email: res.data.data.user_email,
 
           }
+          
         })
+       
      }
      else{
       dispatch ({
@@ -50,6 +60,12 @@ const SignInCall= (dispatch)=> async({email, password}) => {
       dispatch({
         type:"setUserDetail",
         payload: {
+          user_firstname:"",
+          user_lastname:"",
+          user_password :"",
+          user_phone : "",
+          flag_authenticated: "",
+          flag_email_verified: "",
           access_token: "",
           user_email:"",
         }
@@ -58,7 +74,7 @@ const SignInCall= (dispatch)=> async({email, password}) => {
   });
 }
 
-const Registercall = (dispatch) => async ({ firstname,lastname,email, password,phone }) => {
+const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,password }) => {
   dispatch ({
     type:"setErrorMessage",
     payload: {
@@ -69,19 +85,18 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, password,p
     firstname,
     lastname,
      email,
-     password,
-     phone
+     phone,
+     password
   }, (res)=>{
-     console.log("res.data",res.data); 
      if(res.data.status == true){
         dispatch({
           type:"setUserDetail",
           payload: {
-            user_firstname:res.data.firstname,
-            user_lastname:res.data.lastname,
+            user_first_name:res.data.firstname,
+            user_last_name:res.data.lastname,
             user_email:res.data.email,
-            user_password :res.data.password,
             user_phone : res.data.phone,
+            user_password :res.data.password,
             flag_authenticated: true,
             flag_email_verified: false
           }
@@ -149,5 +164,11 @@ export const { Provider, Context } = createDataContext(
   userDetail: {
     access_token: "",
     user_email:"",
+    user_first_name:"",
+    user_last_name:"",
+    user_password :"",
+    user_phone : "",
+    flag_authenticated: "",
+    flag_email_verified: ""
   }
 });
