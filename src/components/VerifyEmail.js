@@ -64,7 +64,7 @@ export default function VerifyEmail() {
                   to="/"
                   color="textPrimary"
               >
-                  <button href="#" underline="none"
+                  <button underline="none"
                   onClick={VerifyEmailCall}>
                      If you Haven't Received any email please click here.
                   </button>
