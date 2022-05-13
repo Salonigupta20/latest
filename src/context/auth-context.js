@@ -3,7 +3,7 @@ import { SignInAPI } from "../services/SignInCall";
 import { RegisterAPI } from "../services/RegisterCall";
 import { useReducer } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { verifyEmailAPI } from "../services/VerifyEmailServices";
+import { verifyEmailAPI, verifyLinkAPI } from "../services/VerifyEmailServices";
 
 
 
@@ -17,6 +17,15 @@ const reducer = (state, action) => {
       return { ...state, error_message: action.payload.error_message };
       case "logout":
         return { ...state, user_detail: action.payload}
+        case "VerifyEmail": {
+          console.log("Action payload", action.payload);
+          debugger;
+          return { ...state, user_detail: { ...state.user_detail, flag_email_verified: action.payload } }
+        }
+        case "verifyingEmailAddress": {
+          debugger;
+          return { ...state, verifyingEmailAddress: action.payload }
+        }
     default:
       return state;
   }
@@ -196,6 +205,57 @@ const VerifyEmailCall = (dispatch)=> async ({ email_address }) => {
     });
   }
 
+  const VerifyLinkCall= (dispatch) => async ({ token})=>{
+    console.log("token",token)
+    dispatch ({
+      type: "VerifyingEmailAddress",
+      payload:1
+        })
+        await verifyLinkAPI({
+          token
+        }, (res)=>{
+           console.log("res.data of Verify Link Auth Context",res); 
+            if(res?.data?.status === true){
+              dispatch({
+                type: "verifyingEmailAddress",
+                payload: 2
+              })
+              setTimeout(()=>{
+                dispatch({
+                  type: "VerifyEmail",
+                  payload: true
+                })
+              }, 5000)
+             }
+             else{
+              //  debugger;
+              dispatch({
+                type: "verifyingEmailAddress",
+                payload: 3
+              })
+              dispatch ({
+                type:"setErrorMessage",
+                payload: {
+                  error_message:"Incorrect Email address or password from email verification  page"
+                }
+              })
+              dispatch({
+                type:"setUserDetail",
+                payload: {
+                  email:"",
+                  flag_authenticated: false
+                }
+              })
+              dispatch({
+                type: "VerifyEmail",
+                payload: false
+              })
+              console.log("status is false when done api call for verify link");
+            }
+           
+        });
+      }
+ 
 
 // const reducer = (state, action) => {
 //   switch(action.type){
@@ -230,7 +290,7 @@ const VerifyEmailCall = (dispatch)=> async ({ email_address }) => {
 
 
 export const { Provider, Context } = createDataContext(
-  reducer, {SignInCall, Registercall, logout, VerifyEmailCall },
+  reducer, {SignInCall, Registercall, logout, VerifyEmailCall, VerifyLinkCall },
   {
   user_detail: {
     access_token: "",

@@ -29,6 +29,7 @@ export default function VerifyEmail() {
   //   let navigate = useNavigate();
 
     const VerifyEmail = ()=>{
+      console.log("email address",state.user_detail.user_email)
       VerifyEmailCall({email_address:state.user_detail.user_email})
     }
 
@@ -75,7 +76,7 @@ export default function VerifyEmail() {
                   color="textPrimary"
               >
                   <Link href="#" underline="none"
-                  // onClick={VerifyEmailCall}
+                  onClick={VerifyEmail}
                   >
 
                      After Verification Please Click Here To Continue!
