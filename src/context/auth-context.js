@@ -33,28 +33,42 @@ const SignInCall= (dispatch)=> async({email, password}) => {
      password
   }, (res)=>{
 
-    console.log("data",res.data)
-    console.log("data.data",res.data.data)
-     if(res.data.status == true && res.data.data.verify===true ){
-      console.log("saloni2")
-        dispatch({
-          type:"setUserDetail",
-          payload: {
-            user_firstname: "",
-            user_lastname: "",
-            user_password: "",
-            user_phone: "",
-            flag_authenticated: true,
-            flag_email_verified: true,
-            access_token: res.data.data.accessToken,
-            user_email: res.data.data.user_email,
-           
+    console.log("data", res.data)
+    console.log("data.data", res.data.data)
 
+
+    if (res.data.status == true) {
+      if (res.data.data.verify === true) {
+        dispatch({
+          type: "setUserDetail",
+          payload: {
+            flag_email_verified: true
           }
-          
-        }) 
-       
-     }
+        })}
+
+      else {
+        dispatch({
+          type: "setUserDetail",
+          payload: {
+            flag_email_verified: false
+          }
+        })
+      console.log("saloni2")
+      dispatch({
+        type: "setUserDetail",
+        payload: {
+          user_firstname: "",
+          user_lastname: "",
+          user_password: "",
+          user_phone: "",
+          flag_authenticated: true,
+          access_token: res.data.data.accessToken,
+          user_email: res.data.data.user_email,
+        }
+
+      })
+
+    }}
      else{
        console.log("saloni")
       dispatch ({
@@ -73,8 +87,7 @@ const SignInCall= (dispatch)=> async({email, password}) => {
           flag_authenticated: "",
           flag_email_verified: "",
           access_token: "",
-          user_email:"",
-          
+          user_email:""
         }
       })
     }
@@ -112,7 +125,7 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,pass
      phone,
      password
   }, (res)=>{
-     if(res.data.status == true && res.data.data.verify===true){
+     if(res.data.status == true){
         dispatch({
           type:"setUserDetail",
           payload: {
@@ -121,7 +134,7 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,pass
             user_email:res.data.email,
             user_phone : res.data.phone,
             user_password :res.data.password,
-            flag_authenticated: true,
+            flag_authenticated: "",
             flag_email_verified: true
           }
         })
