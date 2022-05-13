@@ -28,18 +28,14 @@ export default function VerifyEmail() {
   const{VerifyEmailCall,logout, state}= useContext(Authcontext)
   //   let navigate = useNavigate();
 
-  //   const VerifyEmail = ()=>{
-  //     VerifyEmailCall()
-  //   }
+    const VerifyEmail = ()=>{
+      VerifyEmailCall({email_address:state.user_detail.user_email})
+    }
 
     const logoutcall = ()=> {
       logout()
       // navigate("/")
     }
-    // const VerifyEmailCall = ()=> {
-    //   VerifyEmail()
-    //   // navigate("/")
-    // }
   return (
     <Box
       sx={{
@@ -65,7 +61,7 @@ export default function VerifyEmail() {
                   color="textPrimary"
               >
                   <button underline="none"
-                  onClick={VerifyEmailCall}>
+                  onClick={VerifyEmail}>
                      If you Haven't Received any email please click here.
                   </button>
               </Typography>
