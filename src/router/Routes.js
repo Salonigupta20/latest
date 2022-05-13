@@ -11,12 +11,12 @@ import {useContext} from "react"
 
 function Routing(){
     const {state} = useContext(Authcontext);
-  const { user_detail: {access_token},  user_detail: {flag_email_verified}  } = state;
-  console.log("isLoggedIn from routing called",access_token);
+  const { user_detail: {flag_authenticated},  user_detail: {flag_email_verified}  } = state;
+  console.log("isLoggedIn from routing called",flag_authenticated);
     return(
         <Routes>
-            {access_token ? (<>
-                <Route path="/" element={<Navigate to="/Dashboard" />} />
+            {flag_authenticated ? (<>
+                <Route path="/" element={<Navigate to="/VerifyEmail" />} />
                 <Route path="register" element={<Register />} />
                 {flag_email_verified ? (
                     (<Route path="VerifyEmail" element={<Navigate to="/Dashboard" />} />))

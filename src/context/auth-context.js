@@ -36,6 +36,7 @@ const SignInCall= (dispatch)=> async({email, password}) => {
     console.log("data",res.data)
     console.log("data.data",res.data.data)
      if(res.data.status == true && res.data.data.verify===true ){
+      console.log("saloni2")
         dispatch({
           type:"setUserDetail",
           payload: {
@@ -43,10 +44,11 @@ const SignInCall= (dispatch)=> async({email, password}) => {
             user_lastname: "",
             user_password: "",
             user_phone: "",
-            flag_authenticated: "",
+            flag_authenticated: true,
             flag_email_verified: true,
             access_token: res.data.data.accessToken,
             user_email: res.data.data.user_email,
+           
 
           }
           
@@ -54,6 +56,7 @@ const SignInCall= (dispatch)=> async({email, password}) => {
        
      }
      else{
+       console.log("saloni")
       dispatch ({
         type:"setErrorMessage",
         payload: {
@@ -71,6 +74,7 @@ const SignInCall= (dispatch)=> async({email, password}) => {
           flag_email_verified: "",
           access_token: "",
           user_email:"",
+          
         }
       })
     }
@@ -108,7 +112,7 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,pass
      phone,
      password
   }, (res)=>{
-     if(res.data.status == true){
+     if(res.data.status == true && res.data.data.verify===true){
         dispatch({
           type:"setUserDetail",
           payload: {
@@ -118,7 +122,7 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,pass
             user_phone : res.data.phone,
             user_password :res.data.password,
             flag_authenticated: true,
-            flag_email_verified: false
+            flag_email_verified: true
           }
         })
      }

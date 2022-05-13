@@ -66,11 +66,11 @@ export default function SignIn() {
 //   })
 // }}
 
-useEffect(() => {
-        if (state.user_detail.access_token) {
-            navigate("/Dashboard")
-        }
-    }, [state.user_detail.access_token])
+// useEffect(() => {
+//         if (state.user_detail.access_token) {
+//             navigate("/Dashboard")
+//         }
+//     }, [state.user_detail.access_token])
 
 
   const handleSubmit = (event) => {
