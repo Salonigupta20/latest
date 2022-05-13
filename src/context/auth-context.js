@@ -3,6 +3,7 @@ import { SignInAPI } from "../services/SignInCall";
 import { RegisterAPI } from "../services/RegisterCall";
 import { useReducer } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { verifyEmailAPI, verifyLinkAPI } from "../services/VerifyEmailServices,js";
 
 
 
@@ -42,7 +43,14 @@ const SignInCall= (dispatch)=> async({email, password}) => {
         dispatch({
           type: "setUserDetail",
           payload: {
-            flag_email_verified: true
+            flag_email_verified: true,
+            user_firstname: "",
+          user_lastname: "",
+          user_password: "",
+          user_phone: "",
+          flag_authenticated: true,
+          access_token: res.data.data.accessToken,
+          user_email: res.data.data.user_email,
           }
         })}
 
@@ -50,23 +58,16 @@ const SignInCall= (dispatch)=> async({email, password}) => {
         dispatch({
           type: "setUserDetail",
           payload: {
-            flag_email_verified: false
-          }
-        })
-      console.log("saloni2")
-      dispatch({
-        type: "setUserDetail",
-        payload: {
-          user_firstname: "",
+            flag_email_verified: false,
+            user_firstname: "",
           user_lastname: "",
           user_password: "",
           user_phone: "",
           flag_authenticated: true,
           access_token: res.data.data.accessToken,
           user_email: res.data.data.user_email,
-        }
-
-      })
+          }
+        })
 
     }}
      else{
@@ -162,6 +163,39 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,pass
   });
 }
 
+const VerifyEmailCall = (dispatch)=> async ({ email_address }) => {
+  console.log("calling the verify email",email_address)
+  verifyEmailAPI({
+    email_address},
+    (res)=>{
+      console.log("data of email verification", res.data);
+      if(res.data.status== true){
+        // Navigate("/Dashboard")
+      }
+      else{
+        dispatch({
+          type:"setErrorMessage",
+          payload: {
+            error_message: "Incorrect Email Address from the verification"
+          }
+        })
+        dispatch({
+          type: "setUserDetail",
+          payload: {
+            user_firstname:"",
+            user_lastname:"",
+            user_email:"",
+            user_password :"",
+            user_phone : "",
+            flag_authenticated: true,
+            flag_email_verified: false
+
+          }
+        })
+      }
+    });
+  }
+
 
 // const reducer = (state, action) => {
 //   switch(action.type){
@@ -196,7 +230,7 @@ const Registercall = (dispatch) => async ({ firstname,lastname,email, phone,pass
 
 
 export const { Provider, Context } = createDataContext(
-  reducer, {SignInCall, Registercall, logout },
+  reducer, {SignInCall, Registercall, logout, VerifyEmailCall },
   {
   user_detail: {
     access_token: "",

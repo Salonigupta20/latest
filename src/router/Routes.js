@@ -21,7 +21,7 @@ function Routing(){
                 {flag_email_verified ? (
                     (<Route path="VerifyEmail" element={<Navigate to="/Dashboard" />} />))
                     :
-                    (<Route path="VerifyEmail" element={<Navigate to="/VerifyEmail" />} />)
+                    (<Route path="VerifyEmail" element={<VerifyEmail />} />)
             }
                 <Route path="Reset" element={<Reset />} />
                 <Route path="ResetPassword" element={<ResetPassword />} />

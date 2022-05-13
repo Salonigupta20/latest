@@ -6,6 +6,10 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import {navigate, useNavigate} from "react-router-dom";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import {Context as Authcontext} from "../context/auth-context" 
+import { useState , useContext, useEffect} from 'react';
+// import VerifyEmail from "./VerifyEmail"
+
 
 function Copyright() {
   return (
@@ -21,7 +25,21 @@ function Copyright() {
 }
 
 export default function VerifyEmail() {
-    let navigate = useNavigate();
+  const{logout, state}= useContext(Authcontext)
+  //   let navigate = useNavigate();
+
+  //   const VerifyEmail = ()=>{
+  //     VerifyEmailCall()
+  //   }
+
+    const logoutcall = ()=> {
+      logout()
+      // navigate("/")
+    }
+    // const VerifyEmailCall = ()=> {
+    //   VerifyEmail()
+    //   // navigate("/")
+    // }
   return (
     <Box
       sx={{
@@ -59,7 +77,9 @@ export default function VerifyEmail() {
                   to="/"
                   color="textPrimary"
               >
-                  <Link href="#" underline="none">
+                  <Link href="#" underline="none"
+                  // onClick={VerifyEmailCall}
+                  >
 
                      After Verification Please Click Here To Continue!
                   </Link>
@@ -79,8 +99,9 @@ export default function VerifyEmail() {
       >
                 <Container maxWidth="sm">
                     <Typography variant="body1">
-                        <Link onClick={() => {
-                            navigate('/');}}>
+                        <Link 
+                            onClick={logoutcall}
+                            >
                             LOGOUT
                         </Link>
                         <br/>

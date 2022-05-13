@@ -31,6 +31,10 @@ export default function Dashboard() {
 
   const{logout, state}= useContext(Authcontext)
     let navigate = useNavigate();
+    const logoutcall = ()=> {
+      logout()
+      // navigate("/")
+    }
   return (
     <Box
       sx={{
@@ -48,7 +52,7 @@ export default function Dashboard() {
           <button 
           // onClick={() => {
           //     navigate('/');}}
-          onClick={logout}
+          onClick={logoutcall}
           >LOGOUT</button>
             </Box>
            
