@@ -3,7 +3,7 @@ import { SignInAPI } from "../services/SignInCall";
 import { RegisterAPI } from "../services/RegisterCall";
 import { useReducer } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { verifyEmailAPI, verifyLinkAPI } from "../services/VerifyEmailServices,js";
+import { verifyEmailAPI } from "../services/VerifyEmailServices";
 
 
 
