@@ -10,7 +10,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import {navigate, useNavigate} from "react-router-dom";
 import { RegisterAPI } from '../services/RegisterCall';
 
@@ -44,23 +44,22 @@ export default function Register() {
 
   const RegisterUser=()=>{
     const{first_name,last_name,email,phone,password}=userDetail;
-
     if(first_name==""||last_name==""||email==""||phone==""||password==""){
-  alert("Please fill the required fields")}
-
-else{
-
+          alert("Please fill the required fields");
+    }
+   else{
   RegisterAPI({first_name,last_name, email,password,phone},(res)=>{
-    if(res?.data?.status===true){
-      setUserExist("User registered successfully.");
-      navigate("/VerifyEmail",{state:{email}})
+    if(res.data.status===true){
+      setUserExist("User Registered Successfully");
+      // setTimeout(navigate("/VerifyEmail",{state: {email}}), 60000)
+      setTimeout(()=>navigate("/VerifyEmail"),2000)
     }
     else{
-      setUserExist("User already exist.")
+      setUserExist("User Already Exist. Please sign in")
+      // setTimeout(navigate("/",{state: {email}}),60000)
+      setTimeout(()=>navigate("/"),2000)
     }
-    console.log("printing response of get register api",res)}
-    ,(err)=>{
-      alert("got error of register api",err)
+    
   })
 }
 useEffect(()=>{
@@ -69,12 +68,14 @@ useEffect(()=>{
   }
 
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
       password: data.get('password'),
+      phone: data.get('phone')
     });
   };
 
@@ -96,7 +97,9 @@ useEffect(()=>{
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          {userExist == " " ?<h4> </h4> :<h4>{userExist}</h4>}
+          <div>
+          {userExist == " " ?<h5> </h5> :<h5>{userExist}</h5>}
+          </div>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -123,7 +126,7 @@ useEffect(()=>{
                   name="lastName"
                   autoComplete="family-name"
                   onChange={(e)=>{
-                   console.log("firstname",e.target.value)
+                   console.log("lastname",e.target.value)
                   setUserDetail({ ...userDetail, last_name: e.target.value});
                   }}
                 />
@@ -137,7 +140,7 @@ useEffect(()=>{
                   name="email"
                   autoComplete="email"
                   onChange={(e)=>{
-                   console.log("firstname",e.target.value)
+                   console.log("email",e.target.value)
                   setUserDetail({ ...userDetail, email: e.target.value});
                   }}
                 />
@@ -151,7 +154,7 @@ useEffect(()=>{
                   name="phone"
                   onChange={(e)=>{
                    console.log("phone",e.target.value)
-                  setUserDetail({ ...userDetail, email: e.target.value});
+                  setUserDetail({ ...userDetail, phone: e.target.value});
                   }}
                 />
               </Grid>
@@ -165,7 +168,7 @@ useEffect(()=>{
                   id="password"
                   autoComplete="new-password"
                   onChange={(e)=>{
-                   console.log("firstname",e.target.value)
+                   console.log("password",e.target.value)
                   setUserDetail({ ...userDetail, password: e.target.value});
                   }}
                 />

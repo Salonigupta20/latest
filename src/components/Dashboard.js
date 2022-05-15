@@ -6,6 +6,8 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import {navigate, useNavigate} from "react-router-dom";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import {Context as Authcontext} from "../context/auth-context" 
+import { useState , useContext, useEffect} from 'react';
 
 function Copyright() {
   return (
@@ -21,7 +23,18 @@ function Copyright() {
 }
 
 export default function Dashboard() {
+//   useEffect(() => {
+//     if (state.user_detail.access_token) {
+//         navigate("/")
+//     }
+// }, [state.user_detail.access_token])
+
+  const{logout, state}= useContext(Authcontext)
     let navigate = useNavigate();
+    const logoutcall = ()=> {
+      logout()
+      // navigate("/")
+    }
   return (
     <Box
       sx={{
@@ -36,9 +49,11 @@ export default function Dashboard() {
           LOGIN SUCCESSFULL
         </Typography>
                 </Container>
-          <button onClick={() => {
-              navigate('/');
-          }}>LOGOUT</button>
+          <button 
+          // onClick={() => {
+          //     navigate('/');}}
+          onClick={logoutcall}
+          >LOGOUT</button>
             </Box>
            
     );
