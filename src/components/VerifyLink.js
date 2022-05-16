@@ -14,15 +14,10 @@ import Link from '@mui/material/Link';
 
 
 const VerifyLink = () => {
-  const { state, VerifyEmailCall, VerifyLinkCall } = useContext(AuthContext);
+  const { state, VerifyLinkCall } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { user_detail } = state;
   const [searchParams] = useSearchParams();
-  console.log("Search Params ", searchParams)
   const token = searchParams.get('token');
-  console.log("Verify Email Address called", token);
-  console.log("Printing state for auth context", state);
-
 
 
   useEffect(()=>{

@@ -231,7 +231,7 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
     else {
       dispatch({
         type: "verifyingEmailAddress",
-        payload: true
+        payload: false
       })
       dispatch({
         type: "setErrorMessage",
