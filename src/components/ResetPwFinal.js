@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState, useContext} from 'react';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import {Context as AuthContext} from '../context/auth-context'
 
 function Copyright(props) {
@@ -28,8 +28,10 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
+//http://localhost:9210/resetPassword?email=saloni@acedataanalytics.com&token=TQr0FvTf40gfeluY5Uq2SrRMeFVnL4ar2PJnqRAmiJf810gvqWCRgAxaElPgPI9h0rT7usaAd9A3WaEaWTXJ5S8SaRYiflpwV3k5IQkrZphYWAPhBqpUv7LPfUkV1rshrrcoydUpe1o3T5G2a1Yh1652700793939
 
 export default function ResetPassword() {
+  let navigate= useNavigate();
 
 
   const[giveMessage, setGiveMessage] = useState("");
@@ -58,6 +60,7 @@ export default function ResetPassword() {
         token: SearchParams.get("token"),
         password: updated_details.password,
       });
+      setTimeout(()=>navigate("/"),2000)
       // Navigate('/');
       }
       else{
