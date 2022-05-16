@@ -5,6 +5,7 @@ import { useReducer } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { verifyEmailAPI, verifyLinkAPI } from "../services/VerifyEmailServices";
 import { ResetPasswordAPI } from "../services/ResetPWServices";
+import { UpdatePasswordAPI } from "../services/UpdatePasswordServices";
 
 
 
@@ -25,6 +26,10 @@ const reducer = (state, action) => {
     case "verifyingEmailAddress": {
       return { ...state, verifyingEmailAddress: action.payload }
     }
+    case "setdata":
+      return { ...state, updated_data: action.payload };
+      case "error_message":
+      return { ...state, error_message: action.payload.message };
     default:
       return state;
   }
@@ -260,6 +265,12 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
             flag_authenticated: true
           }
         })
+        dispatch({
+          type: "setErrorMessage",
+          payload: {
+            error_message: "We've sent you an email to reset your password."
+          }
+        })
      }
      else{
       dispatch ({
@@ -279,6 +290,36 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
   });
 }
 
+const UpdatePasswordCall=(dispatch) => ({email,token,password}) =>{
+  dispatch({
+    type: "setErrorMessage",
+    payload: {
+      error_message: ""
+    }
+  })
+  UpdatePasswordAPI({
+    password,token
+  }, (res)=>{
+    if(res.data.status== true){
+      dispatch({
+        type:"setdata",
+        payload:{
+          token: token,
+          password: password,
+          message: res.data.data
+        }
+      })
+    }
+    else{
+      dispatch ({
+        type: "error_message",
+        payload: {
+          message: res.data
+        }
+      })
+    }
+  });
+}
 
 // const reducer = (state, action) => {
 //   switch(action.type){
@@ -313,7 +354,7 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
 
 
 export const { Provider, Context } = createDataContext(
-  reducer, { SignInCall, Registercall, logout, VerifyEmailCall, VerifyLinkCall, ResetPasswordcall },
+  reducer, { SignInCall, Registercall, logout, VerifyEmailCall, VerifyLinkCall, ResetPasswordcall, UpdatePasswordCall },
   {
     user_detail: {
       access_token: "",
@@ -325,6 +366,11 @@ export const { Provider, Context } = createDataContext(
       flag_authenticated: "",
       flag_email_verified: ""
     },
-    verifyingEmailAddress: ""
+    verifyingEmailAddress: "",
+    updated_data: {
+      token: "",
+      password: "",
+      message: ""
+    }
 
   });

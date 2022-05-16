@@ -10,6 +10,9 @@ import LockResetIcon from '@mui/icons-material/LockReset';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useState, useContext} from 'react';
+import { Navigate, useSearchParams } from 'react-router-dom';
+import {Context as AuthContext} from '../context/auth-context'
 
 function Copyright(props) {
   return (
@@ -27,14 +30,41 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function ResetPassword() {
+
+
+  const[giveMessage, setGiveMessage] = useState("");
+  const[updated_details, SetUpdated_details]= useState(
+    {
+      email: "",
+      password: "",
+      confirm_password: ""
+    }
+  );
+  const[SearchParams,setSearchParams] =useSearchParams();
+  console.log(SearchParams.get('email'));
+  const {UpdatePasswordCall} = useContext(AuthContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
   };
+
+  const checkPassword = () => {
+    if(updated_details.password==updated_details.confirm_password){
+      console.log("token", setSearchParams("token"));
+      UpdatePasswordCall({
+        token: SearchParams.get("token"),
+        password: updated_details.password,
+      });
+      // Navigate('/');
+      }
+      else{
+        setGiveMessage("Passwords do not match");
+      }
+    }
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -65,6 +95,7 @@ export default function ResetPassword() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={SearchParams.get("email")}
             />
             <TextField
               margin="normal"
@@ -75,6 +106,13 @@ export default function ResetPassword() {
               type="password"
               id="password"
               autoComplete="new password"
+              value={updated_details.password}
+              onChange= {(e)=> {
+                updated_details.password({
+                  ...updated_details,
+                  password: e.target.value,
+                });
+              }}
             />
             <TextField
               margin="normal"
@@ -85,12 +123,23 @@ export default function ResetPassword() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={updated_details.confirm_password}
+              onChange= {(e)=> {
+                updated_details.confirm_password({
+                  ...updated_details,
+                  confirm_password: e.target.value,
+                });
+              }}
             />
+            <div>
+            {giveMessage=="" ? <span></span> : <span>{giveMessage}</span>}
+            </div>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={checkPassword}
             >
               Reset Password
             </Button>

@@ -85,7 +85,6 @@ export default function Reset() {
               onClick= {() => {
                 
                 ResetPasswordcall({"email":mail})
-                // navigate('ResetPassword')
          
           }} 
             >

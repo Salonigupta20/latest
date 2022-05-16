@@ -34,7 +34,7 @@ const theme = createTheme();
 
 export default function SignIn() {
   let navigate = useNavigate();
-  const{SignInCall, state}= useContext(Authcontext)
+  const{SignInCall,state}= useContext(Authcontext)
   const{error_message}= state;
 
   const [userDetail,setUserDetail] = useState(
