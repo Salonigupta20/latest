@@ -10,7 +10,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 import {navigate, useNavigate} from "react-router-dom";
 import { RegisterAPI } from '../services/RegisterCall';
 

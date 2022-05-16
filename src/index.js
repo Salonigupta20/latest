@@ -15,8 +15,7 @@ root.render(
   <React.StrictMode>
   <BrowserRouter>
   <AuthProvider>
-  <VerifyLink></VerifyLink>
- {/* <Routing></Routing> */}
+ <Routing></Routing>
  </AuthProvider>
  </BrowserRouter>
   </React.StrictMode>
