@@ -52,6 +52,7 @@ export default function ResetPassword() {
 
   const checkPassword = () => {
     if(updated_details.password==updated_details.confirm_password){
+      setGiveMessage("Password reset successfull, please log in");
       console.log("token", setSearchParams("token"));
       UpdatePasswordCall({
         token: SearchParams.get("token"),
@@ -108,7 +109,7 @@ export default function ResetPassword() {
               autoComplete="new password"
               value={updated_details.password}
               onChange= {(e)=> {
-                updated_details.password({
+                SetUpdated_details({
                   ...updated_details,
                   password: e.target.value,
                 });
@@ -125,7 +126,7 @@ export default function ResetPassword() {
               autoComplete="current-password"
               value={updated_details.confirm_password}
               onChange= {(e)=> {
-                updated_details.confirm_password({
+                SetUpdated_details({
                   ...updated_details,
                   confirm_password: e.target.value,
                 });

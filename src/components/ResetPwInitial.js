@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Context as AuthContext} from '../context/auth-context'
 
@@ -33,6 +33,7 @@ const theme = createTheme();
 
 export default function Reset() {
   let navigate = useNavigate();
+  
   const[mail,setMail]= useState("")
   const {ResetPasswordcall,state}= useContext(AuthContext)
   const{error_message}= state;
