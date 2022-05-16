@@ -18,7 +18,7 @@ function Copyright(props) {
       <Link color="inherit" href="https://mui.com/">
         Saloni's test project
       </Link>{' '}
-      {new Date().getFullYear()}
+      {new Date().getFullYear()} 
       {'.'}
     </Typography>
   );

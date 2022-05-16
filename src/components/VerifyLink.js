@@ -53,8 +53,9 @@ const VerifyLink = () => {
           <h4 style={{ display: "flex", justifyContent: "center", padding: "10px", paddingTop: "70px", color: "green" }}>
             {state.verifyingEmailAddress === 1 ? "We are verifying your email address" : state.verifyingEmailAddress === 2 ? "Your Email Address has been verified" : state.verifyingEmailAddress === 3 ? "Incorrect Email Address." : ""}
           </h4>
-          <h4 style={{ display: "flex", justifyContent: "center", padding: "10px", color: "black" }}>
-            Redirecting...</h4>
+          <h5 style={{ display: "flex", justifyContent: "center", padding: "10px", color: "black" }}>
+          Your Email Address has been verified.
+            Redirecting...</h5>
         </Typography>
 
       </Container>

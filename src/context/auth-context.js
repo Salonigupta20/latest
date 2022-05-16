@@ -4,6 +4,7 @@ import { RegisterAPI } from "../services/RegisterCall";
 import { useReducer } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { verifyEmailAPI, verifyLinkAPI } from "../services/VerifyEmailServices";
+import { ResetPasswordAPI } from "../services/ResetPWServices";
 
 
 
@@ -208,10 +209,7 @@ const VerifyEmailCall = (dispatch) => async ({ email_address }) => {
 
 const VerifyLinkCall = (dispatch) => async ({ token }) => {
   console.log("token", token)
-  // dispatch({
-  //   type: "VerifyingEmailAddress",
-  //   payload: 1
-  // })
+  
   await verifyLinkAPI({
     token
   }, (res) => {
@@ -221,12 +219,7 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
         type: "verifyingEmailAddress",
         payload: true
       })
-      // setTimeout(() => {
-      //   dispatch({
-      //     type: "VerifyEmail",
-      //     payload: true
-      //   })
-      // }, 5000)
+      
     }
     else {
       dispatch({
@@ -246,13 +239,43 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
           flag_authenticated: false
         }
       })
-      // dispatch({
-      //   type: "VerifyEmail",
-      //   payload: false
-      // })
       console.log("status is false when done api call for verify link");
     }
 
+  });
+}
+
+
+const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
+  ResetPasswordAPI({
+     email,
+     password
+  }, (res)=>{
+     if(res.data.status == true){
+      // Navigate("Reset/ResetPassword")
+        dispatch({
+          type:"setUserDetail",
+          payload: {
+            user_email:res.data.data.user_email,
+            flag_authenticated: true
+          }
+        })
+     }
+     else{
+      dispatch ({
+        type:"setErrorMessage",
+        payload: {
+          error_message:"Incorrect Email address or password"
+        }
+      })
+      dispatch({
+        type:"setUserDetail",
+        payload: {
+          user_email:"",
+          flag_authenticated: false
+        }
+      })
+    }
   });
 }
 
@@ -290,7 +313,7 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
 
 
 export const { Provider, Context } = createDataContext(
-  reducer, { SignInCall, Registercall, logout, VerifyEmailCall, VerifyLinkCall },
+  reducer, { SignInCall, Registercall, logout, VerifyEmailCall, VerifyLinkCall, ResetPasswordcall },
   {
     user_detail: {
       access_token: "",
@@ -303,4 +326,5 @@ export const { Provider, Context } = createDataContext(
       flag_email_verified: ""
     },
     verifyingEmailAddress: ""
+
   });
