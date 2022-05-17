@@ -27,20 +27,17 @@ function Routing(){
                 <Route path="Reset" element={<Reset />} />
                 <Route path="ResetPassword" element={<ResetPassword />} />
                 <Route path="Dashboard" element={<Dashboard />} />
-                <Route path="VerifyLink" element={<VerifyLink />} />
             </>) :
                 (<>
                     <Route path="/" element={<SignIn />} />
                     <Route path="register" element={<Register />} />
                     <Route path="VerifyEmail" element={<Navigate to="/" />} />
                     <Route path="Reset" element={<Reset />} />
-                    <Route path="ResetPassword" element={<ResetPassword />} />
                     <Route path="Dashboard" element={<Navigate to="/" />} />
-                    <Route path="VerifyLink" element={<Navigate to="/" />} />
                 </>)
             }
-           
-            <Route path="Reset/ResetPassword" element={<ResetPassword />} />
+            <Route path="VerifyLink" element={<VerifyLink />} />
+            <Route path="ResetPassword" element={<ResetPassword />} />
         </Routes>
     )
 }

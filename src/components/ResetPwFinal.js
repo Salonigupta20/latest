@@ -55,13 +55,13 @@ export default function ResetPassword() {
   const checkPassword = () => {
     if(updated_details.password==updated_details.confirm_password){
       setGiveMessage("Password reset successfull, please log in");
+      setTimeout(()=>navigate("/"),2000)
       console.log("token", setSearchParams("token"));
       UpdatePasswordCall({
         token: SearchParams.get("token"),
         password: updated_details.password,
       });
-      setTimeout(()=>navigate("/"),2000)
-      // Navigate('/');
+      
       }
       else{
         setGiveMessage("Passwords do not match");

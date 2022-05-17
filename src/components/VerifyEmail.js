@@ -26,11 +26,12 @@ function Copyright() {
 
 export default function VerifyEmail() {
   const{VerifyEmailCall,logout, state}= useContext(Authcontext)
-  //   let navigate = useNavigate();
+    let navigate = useNavigate();
 
     const VerifyEmail = ()=>{
       console.log("email address",state.user_detail.user_email)
       VerifyEmailCall({email_address:state.user_detail.user_email})
+      navigate('/VerifyEmail')
     }
 
     const logoutcall = ()=> {
