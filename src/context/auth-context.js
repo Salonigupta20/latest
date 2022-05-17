@@ -27,7 +27,7 @@ const reducer = (state, action) => {
       return { ...state, verifyingEmailAddress: action.payload }
     }
     case "setdata":
-      return { ...state, updated_data: action.payload };
+      return { ...state, updated_data: action.payload, error_message: action.payload.message };
       case "error_message":
       return { ...state, error_message: action.payload.message };
     default:
@@ -314,7 +314,7 @@ const UpdatePasswordCall=(dispatch) => ({email,token,password}) =>{
       dispatch ({
         type: "error_message",
         payload: {
-          message: res.data
+          message: "Reset Password Failed. Please try again!"
         }
       })
     }

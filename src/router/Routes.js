@@ -25,7 +25,6 @@ function Routing(){
                     (<Route path="VerifyEmail" element={<VerifyEmail />} />)
             }
                 <Route path="Reset" element={<Reset />} />
-                <Route path="ResetPassword" element={<ResetPassword />} />
                 <Route path="Dashboard" element={<Dashboard />} />
             </>) :
                 (<>
