@@ -36,7 +36,7 @@ const VerifyLink = () => {
       else if(state.verifyingEmailAddress === false){
         navigate("/");
       }
-    }, 5000)
+    }, 3000)
   }, [state.verifyingEmailAddress])
 
   return (
@@ -50,9 +50,9 @@ const VerifyLink = () => {
       <CssBaseline />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
         <Typography variant="h2" component="h1" gutterBottom>
-          <h4 style={{ display: "flex", justifyContent: "center", padding: "10px", paddingTop: "70px", color: "green" }}>
-            {state.verifyingEmailAddress === 1 ? "We are verifying your email address" : state.verifyingEmailAddress === 2 ? "Your Email Address has been verified" : state.verifyingEmailAddress === 3 ? "Incorrect Email Address." : ""}
-          </h4>
+          
+            {/* {state.verifyingEmailAddress ? <Navigate to="/Dashboard" /> :<Navigate to="/" />} */}
+          
           <h5 style={{ display: "flex", justifyContent: "center", padding: "10px", color: "black" }}>
           Your Email Address has been verified.
             Redirecting...</h5>

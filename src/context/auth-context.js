@@ -26,10 +26,15 @@ const reducer = (state, action) => {
     case "verifyingEmailAddress": {
       return { ...state, verifyingEmailAddress: action.payload }
     }
-    case "setdata":
+    case "setdata":{
       return { ...state, updated_data: action.payload, error_message: action.payload.message };
-      case "error_message":
+    }
+      case "error_message":{
       return { ...state, error_message: action.payload.message };
+      }
+      case "settingVerifyMailTrue": {
+        return { ...state, user_detail: { ...state.user_detail, flag_email_verified: action.payload } }
+      }
     default:
       return state;
   }
@@ -219,7 +224,11 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
     token
   }, (res) => {
     console.log("res.data of Verify Link Auth Context", res);
-    if (res?.data?.status === true) {
+    if (res.data.status === true) {
+      dispatch({
+        type: "settingVerifyMailTrue",
+        payload: true
+      })
       dispatch({
         type: "verifyingEmailAddress",
         payload: true
