@@ -257,12 +257,12 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
      password
   }, (res)=>{
      if(res.data.status == true){
-      // Navigate("Reset/ResetPassword")
+      // Navigate("/")
         dispatch({
           type:"setUserDetail",
           payload: {
             user_email:res.data.data.user_email,
-            flag_authenticated: true
+            flag_authenticated: false
           }
         })
         dispatch({

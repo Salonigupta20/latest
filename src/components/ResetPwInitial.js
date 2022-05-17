@@ -86,6 +86,7 @@ export default function Reset() {
               onClick= {() => {
                 
                 ResetPasswordcall({"email":mail})
+                setTimeout(()=>navigate("/"),2000)
          
           }} 
             >
