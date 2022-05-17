@@ -52,10 +52,11 @@ export default function ResetPassword() {
 
   };
 
-  const checkPassword = () => {
+  const checkPassword = (e) => {
+    e.preventDefault();
     if(updated_details.password==updated_details.confirm_password){
       setGiveMessage("Password reset successfull, please log in");
-      console.log("token", setSearchParams("token"));
+      console.log("token", SearchParams.get("token"));
       UpdatePasswordCall({
         token: SearchParams.get("token"),
         password: updated_details.password,
@@ -88,7 +89,7 @@ export default function ResetPassword() {
           <Typography component="h1" variant="h5">
             Reset Password
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <TextField
             disabled 
               margin="normal"
@@ -136,7 +137,7 @@ export default function ResetPassword() {
               }}
             />
             <div>
-            {giveMessage=="" ? <span></span> : <span>{giveMessage}</span>}
+            {giveMessage && <span>{giveMessage}</span>}
             </div>
             <Button
               type="submit"
