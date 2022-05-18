@@ -45,7 +45,6 @@ export default function Register() {
     password : "" 
   })  
 
-  
   useEffect(() => {
     if (RegisterDetail !== "") {
       Registercall();
