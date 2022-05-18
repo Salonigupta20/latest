@@ -34,7 +34,7 @@ const VerifyLink = () => {
         navigate("/dashboard");
       }
       else if(state.verifyingEmailAddress === false){
-        navigate("/");
+        navigate("/SignIn");
       }
     }, 3000)
   }, [state.verifyingEmailAddress])

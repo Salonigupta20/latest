@@ -59,7 +59,7 @@ export default function VerifyEmail() {
                   variant="h6"
                   noWrap
                   component={Link}
-                  to="/"
+                  to="/SignIn"
                   color="textPrimary"
               >
                   <button underline="none"
@@ -73,7 +73,7 @@ export default function VerifyEmail() {
                   variant="h6"
                   noWrap
                   component={Link}
-                  to="/"
+                  to="/SignIn"
                   color="textPrimary"
               >
                   <Link href="#" underline="none"

@@ -56,7 +56,7 @@ export default function ResetPassword() {
     e.preventDefault();
     if(updated_details.password==updated_details.confirm_password){
       setGiveMessage("Password reset successfull, please log in");
-      setTimeout(()=>navigate("/"),2000)
+      setTimeout(()=>navigate("/SignIn"),2000)
       console.log("token", setSearchParams("token"));
       UpdatePasswordCall({
         token: SearchParams.get("token"),

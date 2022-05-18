@@ -57,7 +57,7 @@ export default function Register() {
     else{
       setUserExist("User Already Exist. Please sign in")
       // setTimeout(navigate("/",{state: {email}}),60000)
-      setTimeout(()=>navigate("/"),2000)
+      setTimeout(()=>navigate("/SignIn"),2000)
     }
     
   }, (err) => {
@@ -189,7 +189,7 @@ export default function Register() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link onClick={() => {
-          navigate('/');}} variant="body2">
+          navigate('/SignIn');}} variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

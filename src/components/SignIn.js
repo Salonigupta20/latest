@@ -163,14 +163,14 @@ export default function SignIn() {
               <Grid container>
                 <Grid item xs>
                   <Link onClick={() => {
-                    navigate('reset');
+                    navigate('/Reset');
                   }} variant="body2">
                     Forgot Password? Click here to Reset.
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link onClick= {() => {
-          navigate('register'); }} 
+          navigate('/Register'); }} 
            variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
