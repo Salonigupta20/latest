@@ -152,7 +152,6 @@ export default function SignIn() {
                   SignInCall({
                     "email": userDetail.email,
                     "password": userDetail.password
-    
                   })
                   // if(res.data.flag)
                   // navigate('dashboard')

@@ -8,7 +8,7 @@ export const RegisterAPI= async(data,onSuccess, onError)=>{
             headers: {
                 "Content-Type": "application/json"
             },
-            withCredentials:true
+            withCredentials: true
         });
         console.log("log response in register api",response)
         onSuccess && onSuccess(response);

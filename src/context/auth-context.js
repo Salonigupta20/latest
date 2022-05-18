@@ -9,8 +9,6 @@ import { UpdatePasswordAPI } from "../services/UpdatePasswordServices";
 
 
 
-
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "setUserDetail":
@@ -243,7 +241,7 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
       dispatch({
         type: "setErrorMessage",
         payload: {
-          error_message: "Incorrect Email address or password from email verification  page"
+          error_message: "Incorrect Email address or password from email verification page"
         }
       })
       dispatch({

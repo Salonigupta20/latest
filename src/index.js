@@ -5,20 +5,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals'; 
 import Routing from './router/Routes';
 import { BrowserRouter } from 'react-router-dom';
-import VerifyEmail from './components/VerifyEmail';
 import { Provider as AuthProvider } from './context/auth-context';
-import VerifyLink from './components/VerifyLink';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <React.StrictMode>
-  <BrowserRouter>
-  <AuthProvider>
- <Routing></Routing>
- </AuthProvider>
- </BrowserRouter>
-  </React.StrictMode>
+  <React.Fragment>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routing />
+      </AuthProvider>  
+    </BrowserRouter>
+  </React.Fragment>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -60,11 +60,13 @@ export default function Register() {
       setTimeout(()=>navigate("/"),2000)
     }
     
+  }, (err) => {
+    console.log("Printing error in register api call", err)
   })
 }
-useEffect(()=>{
-  console.log("userExist",userExist)
-},[])
+  useEffect(()=>{
+    console.log("userExist",userExist)
+  },[])
   }
 
 
@@ -139,6 +141,7 @@ useEffect(()=>{
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={userDetail.email}
                   onChange={(e)=>{
                    console.log("email",e.target.value)
                   setUserDetail({ ...userDetail, email: e.target.value});
