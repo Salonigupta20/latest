@@ -33,6 +33,9 @@ const reducer = (state, action) => {
       case "settingVerifyMailTrue": {
         return { ...state, user_detail: { ...state.user_detail, flag_email_verified: action.payload } }
       }
+      case "setRegister": {
+        return { ...state, RegisterDetail: action.payload }
+      }
     default:
       return state;
   }
@@ -93,7 +96,8 @@ const SignInCall = (dispatch) => async ({ email, password }) => {
       dispatch({
         type: "setErrorMessage",
         payload: {
-          error_message: "Incorrect Email address or password"
+          // error_message: "Incorrect Email address or password"
+          error_message: res.data.error.message
         }
       })
       dispatch({
@@ -136,6 +140,7 @@ const Registercall = (dispatch) => async ({ firstname, lastname, email, phone, p
     payload: {
       error_message: ""
     }
+    
   })
   RegisterAPI({
     firstname,
@@ -153,16 +158,25 @@ const Registercall = (dispatch) => async ({ firstname, lastname, email, phone, p
           user_email: res.data.email,
           user_phone: res.data.phone,
           user_password: res.data.password,
-          flag_authenticated: "",
-          flag_email_verified: true
+          flag_authenticated: false,
+          flag_email_verified: false
         }
       })
-    }
+      dispatch({
+        type: "setErrorMessage",
+        payload: {
+          error_message: res.data.message
+        }
+      })
+      dispatch({
+        type: "setRegister",
+        payload: true
+    })}
     else {
       dispatch({
         type: "setErrorMessage",
         payload: {
-          error_message: "Incorrect Email address or password from register page"
+          error_message: res.data.error.message
         }
       })
       dispatch({
@@ -177,6 +191,10 @@ const Registercall = (dispatch) => async ({ firstname, lastname, email, phone, p
           flag_email_verified: false
         }
       })
+      dispatch({
+        type: "setRegister",
+        payload: false
+    })
     }
   });
 }
@@ -190,12 +208,20 @@ const VerifyEmailCall = (dispatch) => async ({ email_address }) => {
       console.log("data of email verification", res.data);
       if (res.data.status == true) {
         // Navigate("/Dashboard")
+        dispatch({
+          type: "setErrorMessage",
+          payload: {
+            error_message: res.data.data
+            // error_message: "Incorrect Email Address from the verification"
+          }
+        })
       }
       else {
         dispatch({
           type: "setErrorMessage",
           payload: {
-            error_message: "Incorrect Email Address from the verification"
+            error_message: res.data.error.message
+            // error_message: "Incorrect Email Address from the verification"
           }
         })
         dispatch({
@@ -275,7 +301,8 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
         dispatch({
           type: "setErrorMessage",
           payload: {
-            error_message: "We've sent you an email to reset your password."
+            // error_message: "We've sent you an email to reset your password."
+            error_message: res.dta.data
           }
         })
      }
@@ -283,7 +310,8 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
       dispatch ({
         type:"setErrorMessage",
         payload: {
-          error_message:"Incorrect Email address or password"
+          // error_message:"Incorrect Email address or password"
+          error_message:res.data.error.message
         }
       })
       dispatch({
@@ -328,37 +356,6 @@ const UpdatePasswordCall=(dispatch) => ({email,token,password}) =>{
   });
 }
 
-// const reducer = (state, action) => {
-//   switch(action.type){
-//     case "updateName": {
-//       return { ...state, firstName: action.payload }
-//     }
-//   }
-// }
-
-
-
-
-
-// const [state, dispatch] = useReducer(reducer, {
-//   lastName: "",
-//   email: "",
-//   password: ""
-// })
-
-// dispatch({
-//   firstName: null
-// })
-
-
-
-// const UpdateFirstName = dispatch => (value)=>{
-//   dispatch({
-//     type: "updateFirstName",
-//     payload: value
-//   })
-// }
-
 
 export const { Provider, Context } = createDataContext(
   reducer, { SignInCall, Registercall, logout, VerifyEmailCall, VerifyLinkCall, ResetPasswordcall, UpdatePasswordCall },
@@ -374,6 +371,8 @@ export const { Provider, Context } = createDataContext(
       flag_email_verified: ""
     },
     verifyingEmailAddress: "",
+    RegisterDetail: "",
+    error_message:"",
     updated_data: {
       token: "",
       password: "",
