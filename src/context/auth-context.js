@@ -291,12 +291,16 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
 
 
 const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
-  ResetPasswordAPI({
+  var status
+  var abc;
+  var p1 = await ResetPasswordAPI({
      email,
      password
   }, (res)=>{
+     console.log("Reset password call from AuthContext completed", res);
      if(res.data.status == true){
       // Navigate("/")
+      status=1
         dispatch({
           type:"setUserDetail",
           payload: {
@@ -311,6 +315,9 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
             error_message: res.data.data
           }
         })
+        return {
+          status:1
+        }
      }
      else{
       dispatch ({
@@ -327,8 +334,13 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
           flag_authenticated: false
         }
       })
+      return {
+        status:0
+      }
     }
   });
+  console.log("abc",p1)
+  return p1;
 }
 
 const UpdatePasswordCall=(dispatch) => ({email,token,password}) =>{

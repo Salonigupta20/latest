@@ -10,9 +10,11 @@ export const ResetPasswordAPI= async(data,onSuccess, onError)=>{
             withCredentials:true
         });
         onSuccess && onSuccess(response);
+        return {status:true,res:response};
     }
     catch(err){
         console.log("got an error",err);
         onError && onError(err)
+        return {status:false}
     }
 }

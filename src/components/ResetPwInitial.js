@@ -37,6 +37,7 @@ export default function Reset() {
   const[mail,setMail]= useState("")
   const {ResetPasswordcall,state}= useContext(AuthContext)
   const{error_message}= state;
+  
 
 
   const handleSubmit = (event) => {
@@ -83,10 +84,19 @@ export default function Reset() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick= {() => {
+              onClick= {async () => {
                 
-                ResetPasswordcall({"email":mail})
-                setTimeout(()=>navigate("/SignIn"),3000)
+              var res = await ResetPasswordcall({"email":mail}) 
+               console.log("res from reset password call",res)
+               if(res.status==true ){
+                 console.log("res status true reached")
+                 if (res.res.data.status)
+                  setTimeout(()=>navigate("/SignIn"),3000)
+                else {}
+               }
+                else{
+                  
+                }
          
           }} 
             >
