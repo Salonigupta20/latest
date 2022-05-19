@@ -31,10 +31,10 @@ const VerifyLink = () => {
   useEffect(()=>{
     console.log("Printing verifying email address", state.verifyingEmailAddress);
     setTimeout(() => {
-      if(state.verifyingEmailAddress === true){
+      if(state.verifyingEmailAddress === 2){
         navigate("/dashboard");
       }
-      else if(state.verifyingEmailAddress === false){
+      else if(state.verifyingEmailAddress === 3){
         navigate("/SignIn");
       }
     }, 3000)
@@ -51,14 +51,13 @@ const VerifyLink = () => {
       <CssBaseline />
       <Container component="main" sx={{ mt: 8, mb: 2 }} maxWidth="sm">
         <Typography variant="h2" component="h1" gutterBottom>
-        {error_message}
+       
           
             {/* {state.verifyingEmailAddress ? <Navigate to="/Dashboard" /> :<Navigate to="/" />} */}
           
           <h5 style={{ display: "flex", justifyContent: "center", padding: "10px", color: "black" }}>
-          
-          Your Email Address has been verified.
-            Redirecting...
+          <span>{state.verifyingEmailAddress===1? "We are verifying your Email Address": state.verifyingEmailAddress==2?"Your Email Address has been verified...Redirecting...": state.verifyingEmailAddress===3? "Invalid Credentials": ""}</span>
+            
             </h5>
         </Typography>
 

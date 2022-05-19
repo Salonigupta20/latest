@@ -18,11 +18,12 @@ function Routing() {
         <Routes>
             <Route path="VerifyLink" element={<VerifyLink />} />
             <Route path="ResetPassword" element={<ResetPassword />} />
+            <Route path="Reset" element={<Reset />} />
+
             
 
             {flag_authenticated ? (<>
 
-                <Route path="Reset" element={<Reset />} />
                 {flag_email_verified ?
                     (<>
                         <Route path="Dashboard" element={<Dashboard />} />
@@ -41,7 +42,6 @@ function Routing() {
                     <Route path="/SignIn" element={<SignIn />} />
                     <Route path="Register" element={<Register />} />
                     <Route path="VerifyEmail" element={<VerifyEmail />} />
-                    <Route path="Reset" element={<Reset />} />
                     <Route path="Dashboard" element={<Navigate to="/SignIn" />} />
                     <Route path="*" element={<Navigate to="/SignIn" />} />
 
