@@ -243,7 +243,7 @@ const VerifyEmailCall = (dispatch) => async ({ email_address }) => {
 }
 
 const VerifyLinkCall = (dispatch) => async ({ token }) => {
-  console.log("token", token)
+  // console.log("token", token)
   
   await verifyLinkAPI({
     token
@@ -258,6 +258,11 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
         type: "verifyingEmailAddress",
         payload: true
       })
+      dispatch({
+        type: "setErrorMessage",
+         // error_message: "Email Address have been verified..Redirecting"
+        error_message: res.data.error.message
+      })
       
     }
     else {
@@ -268,7 +273,8 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
       dispatch({
         type: "setErrorMessage",
         payload: {
-          error_message: "Incorrect Email address or password from email verification page"
+          // error_message: "Incorrect Email address or password from email verification page"
+          error_message: res.data.error.message
         }
       })
       dispatch({
@@ -303,7 +309,7 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
           type: "setErrorMessage",
           payload: {
             // error_message: "We've sent you an email to reset your password."
-            error_message: res.dta.data
+            error_message: res.data.data
           }
         })
      }
@@ -345,12 +351,20 @@ const UpdatePasswordCall=(dispatch) => ({email,token,password}) =>{
           message: res.data.data
         }
       })
+      dispatch ({
+        type: "setErrorMessage",
+        payload: {
+          // message: "Reset Password Failed. Please try again!"
+          error_message: res.data.error.message
+        }
+      })
     }
     else{
       dispatch ({
-        type: "error_message",
+        type: "setErrorMessage",
         payload: {
-          message: "Reset Password Failed. Please try again!"
+          // message: "Reset Password Failed. Please try again!"
+          error_message: res.data.error.message
         }
       })
     }

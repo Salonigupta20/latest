@@ -28,7 +28,6 @@ function Copyright(props) {
 }
 
 const theme = createTheme();
-//http://localhost:9210/resetPassword?email=saloni@acedataanalytics.com&token=TQr0FvTf40gfeluY5Uq2SrRMeFVnL4ar2PJnqRAmiJf810gvqWCRgAxaElPgPI9h0rT7usaAd9A3WaEaWTXJ5S8SaRYiflpwV3k5IQkrZphYWAPhBqpUv7LPfUkV1rshrrcoydUpe1o3T5G2a1Yh1652700793939
 
 export default function ResetPassword() {
   let navigate= useNavigate();
@@ -44,7 +43,8 @@ export default function ResetPassword() {
   );
   const[SearchParams,setSearchParams] =useSearchParams();
   console.log(SearchParams.get('email'));
-  const {UpdatePasswordCall} = useContext(AuthContext);
+  const {UpdatePasswordCall,state} = useContext(AuthContext);
+  const{message}= state;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -55,7 +55,7 @@ export default function ResetPassword() {
   const checkPassword = (e) => {
     e.preventDefault();
     if(updated_details.password==updated_details.confirm_password){
-      setGiveMessage("Password reset successfull, please log in");
+      setGiveMessage("");
       setTimeout(()=>navigate("/SignIn"),2000)
       console.log("token", setSearchParams("token"));
       UpdatePasswordCall({
@@ -87,6 +87,7 @@ export default function ResetPassword() {
             <LockResetIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
+          {message}
             Reset Password
           </Typography>
           <Box component="form" noValidate sx={{ mt: 1 }}>
