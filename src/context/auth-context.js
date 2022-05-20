@@ -36,6 +36,9 @@ const reducer = (state, action) => {
       case "setRegister": {
         return { ...state, RegisterDetail: action.payload }
       }
+      case "Sent_email": {
+        return { ...state, Email_sent: action.payload }
+      }
     default:
       return state;
   }
@@ -291,16 +294,18 @@ const VerifyLinkCall = (dispatch) => async ({ token }) => {
 
 
 const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
-  var status
-  var abc;
-  var p1 = await ResetPasswordAPI({
+  // var status
+  // var abc;
+  // var p1 = await
+   ResetPasswordAPI({
      email,
      password
   }, (res)=>{
-     console.log("Reset password call from AuthContext completed", res);
+     console.log("Reset password call from AuthContext completed", res)
+     console.log("status",res.data.status)
      if(res.data.status == true){
       // Navigate("/")
-      status=1
+      // status=1
         dispatch({
           type:"setUserDetail",
           payload: {
@@ -315,9 +320,14 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
             error_message: res.data.data
           }
         })
-        return {
-          status:1
-        }
+        dispatch({
+          type:"Sent_email",
+          payload: true
+          
+        })
+        // return {
+        //   status:1
+        // }
      }
      else{
       dispatch ({
@@ -325,8 +335,10 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
         payload: {
           // error_message:"Incorrect Email address or password"
           error_message:res.data.error.message
+          
         }
       })
+      console.log("status2",res.data.status)
       dispatch({
         type:"setUserDetail",
         payload: {
@@ -334,13 +346,18 @@ const ResetPasswordcall = (dispatch) => async ({ email, password }) => {
           flag_authenticated: false
         }
       })
-      return {
-        status:0
-      }
+      dispatch({
+        type:"Sent_email",
+        payload: false
+       
+      })
+      // return {
+      //   status:0
+      // }
     }
   });
-  console.log("abc",p1)
-  return p1;
+  // console.log("abc",p1)
+  // return p1;
 }
 
 const UpdatePasswordCall=(dispatch) => ({email,token,password}) =>{
@@ -397,6 +414,7 @@ export const { Provider, Context } = createDataContext(
       flag_email_verified: ""
     },
     verifyingEmailAddress: "",
+    Email_sent: false,
     RegisterDetail: "",
     error_message:"",
     updated_data: {

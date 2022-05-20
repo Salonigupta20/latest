@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Context as AuthContext} from '../context/auth-context'
 
@@ -31,18 +31,36 @@ const theme = createTheme();
 
 
 
+
 export default function Reset() {
   let navigate = useNavigate();
   
   const[mail,setMail]= useState("")
   const {ResetPasswordcall,state}= useContext(AuthContext)
-  const{error_message}= state;
+  const{error_message,Email_sent}= state;
   
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
   }
+  useEffect(() => {
+    if (Email_sent !== false) {
+      ResetPasswordcall();
+    }
+  }, [])
+  useEffect(() => {
+    // setTimeout(() => {
+      if (state.Email_sent === true) {
+        navigate("/SignIn");
+        console.log("email_sent value",Email_sent)
+      }
+      else if (state.Email_sent === false) {
+        // navigate("/SignIn");
+        console.log("email_sent value",Email_sent)
+      }
+  //   }, 2000)
+  }, [state.Email_sent])
     
 
   
@@ -84,21 +102,31 @@ export default function Reset() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick= {async () => {
-                
-              var res = await ResetPasswordcall({"email":mail}) 
-               console.log("res from reset password call",res)
-               if(res.status==true ){
-                 console.log("res status true reached")
-                 if (res.res.data.status)
-                  setTimeout(()=>navigate("/SignIn"),3000)
-                else {}
-               }
-                else{
-                  
+              onClick={()=>{
+                ResetPasswordcall({
+                    "email": mail
+                  })
+                  // if(res.data.flag)
+                  // navigate('dashboard')
                 }
+                }
+              // onClick= {ResetPasswordcall({"email":mail}) }
+          //     onClick= {async () => {
+                
+          //     var res = await ResetPasswordcall({"email":mail}) 
+          //      console.log("res from reset password call",res)
+          //      if(res.status==true ){
+          //        console.log("res status true reached")
+          //        if (res.res.data.status)
+          //         setTimeout(()=>navigate("/SignIn"),3000)
+          //       else {}
+          //      }
+          //       else{
+                  
+          //       }
          
-          }} 
+          // }} 
+          
             >
              Reset
             </Button>
